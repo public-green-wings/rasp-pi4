@@ -1,0 +1,32 @@
+import rospy
+import socketio
+import json
+from std_msgs.msg import String
+from geographic_msgs.msg import GeoPoseStamped
+from geometry_msgs.msg import PoseStamped, Vector3
+from sensor_msgs.msg import NavSatFix
+from mavros_msgs.msg import GlobalPositionTarget
+
+host = "http://125.6.39.158:5001"
+
+sio = socketio.Client()
+msg = GeoPoseStamped()
+pub = rospy.Publisher('locating',GeoPoseStamped,queue_size=10)
+rospy.init_node('pub_socket_client_node_', anonymous=True)
+
+@sio.on('connect',namespace='/realtime')
+def connect():
+	sio.emit("REQ_MESSAGE",namespace='/realtime')
+
+@sio.on('RES_MESSAGE',namespace='/realtime')
+def receive_message(data):
+	#rospy.loginfo("Hi")
+	msg.pose.position.latitude = data['lat']
+	msg.pose.position.longitude = data['long']
+	msg.pose.position.altitude= data['alt']
+	pub.publish(msg)
+
+
+if __name__ == "__main__" :
+	sio.connect(host,namespaces=['/realtime'])
+		
