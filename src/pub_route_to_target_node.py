@@ -80,6 +80,7 @@ if __name__ == "__main__":
 				else :
 					target_list = target_list[1:]
 			else :
+				target_msg.header.stamp = rospy.Time.now()
 				target_msg.pose.position.longitude = target[0]
 				target_msg.pose.position.latitude = target[1]
 				target_msg.pose.position.altitude = 600
