@@ -136,8 +136,8 @@ target_link_libraries(pub_hovering_node ${catkin_LIBRARIES})
 
 catkin_install_python(PROGRAMS
   src/pub_socket_client_node.py
-  src/pub_route_to_target_node.py
-  src/pub_camera_node.py
+  #src/pub_route_to_target_node.py
+  #src/pub_camera_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
