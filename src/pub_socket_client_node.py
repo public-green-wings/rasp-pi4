@@ -31,7 +31,7 @@ rospy.init_node('pub_socket_client_node_', anonymous=True)
 
 @sio.on('connect',namespace='/realtime')
 def connect():
-	sio.emit("REQ_MESSAGE",namespace='/realtime',{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude})
+	sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 
 @sio.on('RES_MESSAGE',namespace='/realtime')
 def receive_message(data):
@@ -47,7 +47,7 @@ def receive_message(data):
 	msg.pose.position.z= data['alt']
 	"""
 	pub.publish(msg)
-	sio.emit("REQ_MESSAGE",namespace='/realtime')
+	sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 
 
 if __name__ == "__main__" :
