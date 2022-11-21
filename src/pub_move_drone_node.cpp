@@ -71,7 +71,7 @@ int main(int argc, char **argv)
         rate.sleep();
     }
     target_pose.header.stamp = ros::Time::now();
-    target_pose.header.frame_id = 1;
+    //target_pose.header.frame_id = 1;
     for (int i = 0;i<100;i++){
 		target_pose.pose.position.latitude = current_pose.latitude;
 		target_pose.pose.position.longitude = current_pose.longitude;
@@ -111,9 +111,9 @@ int main(int argc, char **argv)
    while(ros::ok()){
        target_pose.header.stamp = ros::Time::now();
        //rotate_pose.header.stamp = ros::Time::now();
-       target_pose.header.frame_id = 1;
+       //target_pose.header.frame_id = 1;
        //rotate_pose.header.frame_id = 1;
-
+       ROS_INFO("Target(lat,long,alt): %4.2f, %4.2f, %4.2f\n",target_pose.pose.position.latitude, target_pose.pose.position.longitude, target_pose.pose.position.altitude);
        /*
        if( current_state.mode != "OFFBOARD" &&
             (ros::Time::now() - last_request > ros::Duration(5.0))){
