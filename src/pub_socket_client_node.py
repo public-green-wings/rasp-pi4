@@ -12,7 +12,7 @@ host = "http://125.6.39.158:5001"
 
 sio = socketio.Client()
 msg = GeoPoseStamped() #for global
-#msg = PoseStamped()
+#msg = PoseStamped() #for local
 global_msg = NavSatFix()
 
 def image_cb(msg):
@@ -23,8 +23,9 @@ def global_cb(msg):
 
 
 pub = rospy.Publisher('targeting',GeoPoseStamped,queue_size=10) #for global
+#pub = rospy.Publisher('targeting',PoseStamped,queue_size=10) #for local
 sub = rospy.Subscriber("mavros/global_position/global",NavSatFix,global_cb)
-#pub = rospy.Publisher('targeting',PoseStamped,queue_size=10)
+#sub = rospy.Subscriber("mavros/local_position/pose",NavSatFix,global_cb)
 #sub = rospy.Subscriber("my_camera",CompressedImage,image_cb)
 
 rospy.init_node('pub_socket_client_node_', anonymous=True)
@@ -32,20 +33,24 @@ rospy.init_node('pub_socket_client_node_', anonymous=True)
 @sio.on('connect',namespace='/realtime')
 def connect():
 	sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
+	#sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 
 @sio.on('RES_MESSAGE',namespace='/realtime')
 def receive_message(data):
 	rospy.loginfo("Target Received")
 	msg.header.stamp = rospy.Time.now()
 
+
 	msg.pose.position.latitude = data['lat']
 	msg.pose.position.longitude = data['long']
 	msg.pose.position.altitude= data['alt']
+
 	"""
 	msg.pose.position.x = data['lat']
 	msg.pose.position.y = data['long']
 	msg.pose.position.z= data['alt']
 	"""
+
 	pub.publish(msg)
 	sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 
