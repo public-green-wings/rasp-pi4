@@ -25,8 +25,8 @@ void state_cb(const mavros_msgs::State::ConstPtr msg){
     current_state = *msg;
 }
 
-void target_cb(const geographic_msgs::GeoPoseStamped::ConstPtr msg){
-    target_pose = *msg;
+void target_cb(const geographic_msgs::GeoPoseStamped msg){
+    target_pose = msg;
     //ROS_INFO("MOVE!\n");
     ROS_INFO("Received(lat,long,alt): %4.2f, %4.2f, %4.2f\n",msg.pose.position.latitude, msg.pose.position.longitude, msg.pose.position.altitude);
 }
