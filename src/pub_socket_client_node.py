@@ -8,6 +8,7 @@ from geographic_msgs.msg import GeoPoseStamped
 from geometry_msgs.msg import PoseStamped, Vector3
 from sensor_msgs.msg import NavSatFix
 from mavros_msgs.msg import GlobalPositionTarget
+
 host = "http://125.6.39.158:5001"
 
 sio = socketio.Client()
@@ -32,28 +33,23 @@ rospy.init_node('pub_socket_client_node_', anonymous=True)
 
 @sio.on('connect',namespace='/realtime')
 def connect():
-	sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
+	sio.emit("JOIN",{"type":"DRONE"},namespace='/realtime')
 	#sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 
-@sio.on('RES_MESSAGE',namespace='/realtime')
+@sio.on('REQ_POS',namespace='/realtime')
 def receive_message(data):
 	rospy.loginfo("Target Received")
 	msg.header.stamp = rospy.Time.now()
-
 
 	msg.pose.position.latitude = data['lat']
 	msg.pose.position.longitude = data['long']
 	msg.pose.position.altitude= data['alt']
 
-	"""
-	msg.pose.position.x = data['lat']
-	msg.pose.position.y = data['long']
-	msg.pose.position.z= data['alt']
-	"""
-
 	pub.publish(msg)
-	sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
-
 
 if __name__ == "__main__" :
-	sio.connect(host,namespaces=['/realtime'])
+	sio.connect(host,namespaces=['/realtime'],wait_timeout=5)
+
+	while True:
+		sio.emit("CUR_POS",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
+		sio.sleep(3)
