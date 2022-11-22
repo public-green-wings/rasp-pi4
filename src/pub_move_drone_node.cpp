@@ -113,7 +113,7 @@ int main(int argc, char **argv)
        //rotate_pose.header.stamp = ros::Time::now();
        target_pose.header.frame_id = 1;
        //rotate_pose.header.frame_id = 1;
-       //ROS_INFO("Target(lat,long,alt): %4.2f, %4.2f, %4.2f\n",target_pose.pose.position.latitude, target_pose.pose.position.longitude, target_pose.pose.position.altitude);
+       ROS_INFO("Target(lat,long,alt): %4.2f, %4.2f, %4.2f\n",target_pose.pose.position.latitude, target_pose.pose.position.longitude, target_pose.pose.position.altitude);
 
        /*
        if( current_state.mode != "OFFBOARD" &&
