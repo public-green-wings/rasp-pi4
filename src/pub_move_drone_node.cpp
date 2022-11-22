@@ -100,21 +100,22 @@ int main(int argc, char **argv)
         rate.sleep();
     }
 
-    mavros_msgs::SetMode offb_set_mode;
-    offb_set_mode.request.custom_mode = "OFFBOARD";
+    // mavros_msgs::SetMode offb_set_mode;
+    // offb_set_mode.request.custom_mode = "OFFBOARD";
 
-    mavros_msgs::CommandBool arm_cmd;
-    arm_cmd.request.value = true;
+    // mavros_msgs::CommandBool arm_cmd;
+    // arm_cmd.request.value = true;
 
    ros::Time last_request = ros::Time::now();
 
    while(ros::ok()){
        target_pose.header.stamp = ros::Time::now();
        //rotate_pose.header.stamp = ros::Time::now();
-       //target_pose.header.frame_id = 1;
+       target_pose.header.frame_id = 1;
        //rotate_pose.header.frame_id = 1;
        //ROS_INFO("Target(lat,long,alt): %4.2f, %4.2f, %4.2f\n",target_pose.pose.position.latitude, target_pose.pose.position.longitude, target_pose.pose.position.altitude);
 
+       /*
        if( current_state.mode != "OFFBOARD" &&
             (ros::Time::now() - last_request > ros::Duration(5.0))){
             if( set_mode_client.call(offb_set_mode) &&
@@ -145,13 +146,14 @@ int main(int argc, char **argv)
 		   //rotate_pub.publish(rotate_pose);
 			//alt_pub.publish(alt_pose);
         }
+      */
 
 
 	   //count+=0.01;
 	   //rotate_pose.yaw=count;
 
        //move_pub.publish(target_pose);
-
+       move_pub.publish(target_pose);
        ros::spinOnce();
        rate.sleep();
 
