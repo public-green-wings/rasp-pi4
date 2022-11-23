@@ -157,7 +157,7 @@ int main(int argc, char **argv)
 
        //move_pub.publish(target_pose);
        move_pub.publish(target_pose);
-       ros::spin();
+       ros::spinOnce();
        rate.sleep();
 
    }
