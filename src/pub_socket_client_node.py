@@ -59,5 +59,7 @@ if __name__ == "__main__" :
 		rospy.loginfo("EMIT!")
 		sio.emit("CUR_POS",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 		eventlet.sleep(0)
+		rospy.loginfo("EMIT DONE!")
 		rospy.spin()
 		rate.sleep()
+		rospy.loginfo("EMIT FINISHED!")
