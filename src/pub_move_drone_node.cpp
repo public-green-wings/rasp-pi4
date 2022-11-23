@@ -72,13 +72,15 @@ int main(int argc, char **argv)
     }
     target_pose.header.stamp = ros::Time::now();
     //target_pose.header.frame_id = 1;
-    for (int i = 0;i<100;i++){
+    for (int i = 0;i<50;i++){
 		target_pose.pose.position.latitude = current_pose.latitude;
 		target_pose.pose.position.longitude = current_pose.longitude;
 		target_pose.pose.position.altitude = current_pose.altitude + 15;
 		//target_pose.pose.position.x = 0;
 		//target_pose.pose.position.y = 0;
 		//target_pose.pose.position.z = 560;
+    ros::spinOnce();
+    rate.sleep();
 	}
 
 	//rotate_pose.yaw = 0;
@@ -93,7 +95,7 @@ int main(int argc, char **argv)
 
 
     //send a few setpoints before starting
-    for(int i = 100; ros::ok() && i > 0; --i){
+    for(int i = 50; ros::ok() && i > 0; --i){
         move_pub.publish(target_pose);
         //alt_pub.publish(alt_pose);
         ros::spinOnce();
