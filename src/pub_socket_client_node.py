@@ -34,7 +34,7 @@ pub = rospy.Publisher('targeting',GeoPoseStamped,queue_size=10) #for global
 #sub = rospy.Subscriber("my_camera",CompressedImage,image_cb)
 
 rospy.init_node('pub_socket_client_node_', anonymous=True)
-rate = rospy.Rate(1)
+rate = rospy.Rate(0.3)
 
 @sio.on('connect',namespace='/realtime')
 def connect():
@@ -60,7 +60,5 @@ if __name__ == "__main__" :
 		sio.emit("CUR_POS",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 		eventlet.sleep(0)
 		rospy.loginfo("EMIT DONE!")
-		rospy.spin()
-		rospy.loginfo("EMIT COMPLETE!")
 		rate.sleep()
 		rospy.loginfo("EMIT FINISHED!")
