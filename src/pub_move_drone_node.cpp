@@ -50,15 +50,15 @@ int main(int argc, char **argv)
 
 	//publishers
    //ros::Publisher move_pub = n.advertise<mavros_msgs::GlobalPositionTarget>("mavros/setpoint_raw/global",10);
-   ros::Publisher move_pub = n.advertise <geographic_msgs::GeoPoseStamped> ("mavros/setpoint_position/global", 10);
+   ros::Publisher move_pub = n.advertise <geographic_msgs::GeoPoseStamped> ("mavros/setpoint_position/global", 1);
    //ros::Publisher move_pub = n.advertise <geometry_msgs::PoseStamped> ("mavros/setpoint_position/local", 10); //for local
    //ros::Publisher rotate_pub = n.advertise <mavros_msgs::PositionTarget> ("mavros/setpoint_raw/local", 10);
 
    //subscribers
-   ros::Subscriber target_sub = n.subscribe<geographic_msgs::GeoPoseStamped>("targeting",10,target_cb); //for global
+   ros::Subscriber target_sub = n.subscribe<geographic_msgs::GeoPoseStamped>("targeting",1,target_cb); //for global
    //ros::Subscriber target_sub = n.subscribe<geometry_msgs::PoseStamped>("targeting",10,target_cb);
-   ros::Subscriber state_sub = n.subscribe<mavros_msgs::State>("mavros/state", 10, state_cb);
-   ros::Subscriber global_sub = n.subscribe<sensor_msgs::NavSatFix>("/mavros/global_position/global", 10, global_cb);
+   ros::Subscriber state_sub = n.subscribe<mavros_msgs::State>("mavros/state", 1, state_cb);
+   ros::Subscriber global_sub = n.subscribe<sensor_msgs::NavSatFix>("/mavros/global_position/global", 1, global_cb);
 
    //servicesClient
    ros::ServiceClient arming_client = n.serviceClient<mavros_msgs::CommandBool>("mavros/cmd/arming");
