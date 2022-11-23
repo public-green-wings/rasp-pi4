@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     for (int i = 0;i<100;i++){
 		target_pose.pose.position.latitude = current_pose.latitude;
 		target_pose.pose.position.longitude = current_pose.longitude;
-		target_pose.pose.position.altitude = current_pose.altitude + 3;
+		target_pose.pose.position.altitude = current_pose.altitude + 15;
 		//target_pose.pose.position.x = 0;
 		//target_pose.pose.position.y = 0;
 		//target_pose.pose.position.z = 560;
