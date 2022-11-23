@@ -9,6 +9,8 @@ from geometry_msgs.msg import PoseStamped, Vector3
 from sensor_msgs.msg import NavSatFix
 from mavros_msgs.msg import GlobalPositionTarget
 
+import eventlet
+
 host = "http://125.6.39.158:5001"
 
 sio = socketio.Client()
@@ -56,6 +58,6 @@ if __name__ == "__main__" :
 	while not rospy.is_shutdown():
 		rospy.loginfo("EMIT!")
 		sio.emit("CUR_POS",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
-		sio.sleep(0)
+		eventlet.sleep(0)
 		rospy.spin()
 		rate.sleep()
