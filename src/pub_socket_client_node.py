@@ -26,7 +26,7 @@ def global_cb(msg):
 
 pub = rospy.Publisher('targeting',GeoPoseStamped,queue_size=10) #for global
 #pub = rospy.Publisher('targeting',PoseStamped,queue_size=10) #for local
-sub = rospy.Subscriber("mavros/global_position/global",NavSatFix,global_cb)
+#sub = rospy.Subscriber("mavros/global_position/global",NavSatFix,global_cb)
 #sub = rospy.Subscriber("mavros/local_position/pose",NavSatFix,global_cb)
 #sub = rospy.Subscriber("my_camera",CompressedImage,image_cb)
 
