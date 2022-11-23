@@ -54,6 +54,7 @@ if __name__ == "__main__" :
 	sio.connect(host,namespaces=['/realtime'],wait_timeout=15)
 
 	while not rospy.is_shutdown():
+		rospy.loginfo("EMIT!")
 		sio.emit("CUR_POS",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 		sio.sleep(0)
 		rospy.spin()
