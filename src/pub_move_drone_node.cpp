@@ -64,7 +64,7 @@ int main(int argc, char **argv)
    ros::ServiceClient arming_client = n.serviceClient<mavros_msgs::CommandBool>("mavros/cmd/arming");
    ros::ServiceClient set_mode_client = n.serviceClient<mavros_msgs::SetMode>("mavros/set_mode");
 
-   ros::Rate rate(20.0);
+   ros::Rate rate(5.0);
 
     while(ros::ok() && !current_state.connected){
         ros::spinOnce();
