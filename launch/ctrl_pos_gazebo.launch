@@ -23,7 +23,7 @@
 	<param name="startup_px4_usb_quirk" value="true" />
 	<param name="mocap/use_tf" value="true"/>
 	<param name="mocap/use_pose" value="false"/>
-	<param name="/conn/timesync_rate" value="0.1"/>
+	<param name="/conn/timesync_rate" value="0.0"/>
 </node>
 
 <node name="pub_move_drone_node" pkg="greenwing" type="pub_move_drone_node" output="screen">
