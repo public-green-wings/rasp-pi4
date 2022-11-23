@@ -20,6 +20,7 @@ def image_cb(msg):
 	sio.emit("IMG_MESSAGE",msg.data,namespace='/realtime')
 
 def global_cb(msg):
+	global global_msg
 	global_msg = msg
 
 
