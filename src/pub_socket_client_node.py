@@ -15,7 +15,7 @@ sio = socketio.Client()
 msg = GeoPoseStamped() #for global
 #msg = PoseStamped() #for local
 global_msg = NavSatFix()
-rate = rospy.Rate(20)
+
 
 def image_cb(msg):
 	sio.emit("IMG_MESSAGE",msg.data,namespace='/realtime')
@@ -32,6 +32,7 @@ pub = rospy.Publisher('targeting',GeoPoseStamped,queue_size=10) #for global
 #sub = rospy.Subscriber("my_camera",CompressedImage,image_cb)
 
 rospy.init_node('pub_socket_client_node_', anonymous=True)
+rate = rospy.Rate(20)
 
 @sio.on('connect',namespace='/realtime')
 def connect():
