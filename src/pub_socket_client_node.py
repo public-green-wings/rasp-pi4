@@ -32,7 +32,7 @@ pub = rospy.Publisher('targeting',GeoPoseStamped,queue_size=10) #for global
 #sub = rospy.Subscriber("my_camera",CompressedImage,image_cb)
 
 rospy.init_node('pub_socket_client_node_', anonymous=True)
-rate = rospy.Rate(20)
+rate = rospy.Rate(0.5)
 
 @sio.on('connect',namespace='/realtime')
 def connect():
