@@ -17,6 +17,7 @@ while (frames>0):
  
     if cv2.waitKey(1) == 27:
         break
+    frames -= 1
 
 capture.release()
 videoWriter.release()
