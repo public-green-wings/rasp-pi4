@@ -13,7 +13,7 @@ while (frames>0):
 
     if ret:
 #        cv2.imshow('video', frame)
-        videoWriter.write(frame)
+        videoWriter.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
  
     if cv2.waitKey(1) == 27:
         break
