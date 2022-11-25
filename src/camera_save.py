@@ -5,7 +5,7 @@ capture = cv2.VideoCapture(0)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 videoWriter = cv2.VideoWriter('video.avi', fourcc, 30.0, (640,480))
  
-frames = 10000
+frames = 50
 
 while (frames>0):
  
