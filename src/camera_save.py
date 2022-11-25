@@ -4,7 +4,7 @@ capture = cv2.VideoCapture(0)
 
 fps = capture.get(cv2.CAP_PROP_FPS)
 fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-videoWriter = cv2.VideoWriter('video.avi', fourcc, 5, (int(capture.get(3)),int(capture.get(4))))
+videoWriter = cv2.VideoWriter('video.avi', fourcc, 1, (int(capture.get(3)),int(capture.get(4))))
  
 frames = 30
 
