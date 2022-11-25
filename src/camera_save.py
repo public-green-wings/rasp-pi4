@@ -3,10 +3,10 @@ import cv2
 capture = cv2.VideoCapture(0)
 
 fps = capture.get(cv2.CAP_PROP_FPS)
-fourcc = cv2.VideoWriter_fourcc(*'XVID')
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
 videoWriter = cv2.VideoWriter('video.avi', fourcc, fps, (int(capture.get(3)),int(capture.get(4))))
  
-frames = 50
+frames = 30
 
 while (frames>0):
  
