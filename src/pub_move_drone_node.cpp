@@ -67,6 +67,7 @@ int main(int argc, char **argv)
    ros::Rate rate(2);
 
     while(ros::ok() && !current_state.connected){
+        ROS_INFO("Looped!");
         ros::spinOnce();
         rate.sleep();
     }
