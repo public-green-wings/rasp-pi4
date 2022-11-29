@@ -21,7 +21,7 @@ sensor_msgs::NavSatFix current_pose;
 //subscriber
 mavros_msgs::State current_state;
 
-extern bool alt_flag = false;
+bool alt_flag = false;
 
 void state_cb(const mavros_msgs::State::ConstPtr msg){
     current_state = *msg;
