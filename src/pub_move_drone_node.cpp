@@ -38,7 +38,7 @@ void target_alt_cb(const geographic_msgs::GeoPoseStamped msg){
     target_pose = msg;
     alt_flag = true;
     //ROS_INFO("MOVE!\n");
-    ROS_INFO("Received(alt): %4.2f, %4.2f, %4.2f\n", msg.pose.position.altitude);
+    ROS_INFO("Received(alt): %4.2f\n", msg.pose.position.altitude);
 }
 /*
 void target_cb(const geometry_msgs::PoseStamped::ConstPtr msg){
