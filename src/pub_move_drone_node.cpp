@@ -21,14 +21,24 @@ sensor_msgs::NavSatFix current_pose;
 //subscriber
 mavros_msgs::State current_state;
 
+extern bool alt_flag = false;
+
 void state_cb(const mavros_msgs::State::ConstPtr msg){
     current_state = *msg;
 }
 
 void target_cb(const geographic_msgs::GeoPoseStamped msg){
     target_pose = msg;
+    alt_flag = false;
     //ROS_INFO("MOVE!\n");
     ROS_INFO("Received(lat,long,alt): %4.2f, %4.2f, %4.2f\n",msg.pose.position.latitude, msg.pose.position.longitude, msg.pose.position.altitude);
+}
+
+void target_alt_cb(const geographic_msgs::GeoPoseStamped msg){
+    target_pose = msg;
+    alt_flag = true;
+    //ROS_INFO("MOVE!\n");
+    ROS_INFO("Received(alt): %4.2f, %4.2f, %4.2f\n", msg.pose.position.altitude);
 }
 /*
 void target_cb(const geometry_msgs::PoseStamped::ConstPtr msg){
@@ -56,6 +66,7 @@ int main(int argc, char **argv)
 
    //subscribers
    ros::Subscriber target_sub = n.subscribe<geographic_msgs::GeoPoseStamped>("targeting",1,target_cb); //for global
+   ros::Subscriber target_alt_sub = n.subscribe<geographic_msgs::GeoPoseStamped>("targeting_alt",1,target_alt_cb);
    //ros::Subscriber target_sub = n.subscribe<geometry_msgs::PoseStamped>("targeting",10,target_cb);
    ros::Subscriber state_sub = n.subscribe<mavros_msgs::State>("mavros/state", 1, state_cb);
    ros::Subscriber global_sub = n.subscribe<sensor_msgs::NavSatFix>("/mavros/global_position/global", 1, global_cb);
@@ -157,6 +168,10 @@ int main(int argc, char **argv)
 	   //rotate_pose.yaw=count;
 
        //move_pub.publish(target_pose);
+       if(alt_flag){
+        target_pose.pose.position.latitude = current_pose.latitude;
+		target_pose.pose.position.longitude = current_pose.longitude;
+       }
        move_pub.publish(target_pose);
        ros::spinOnce();
        rate.sleep();

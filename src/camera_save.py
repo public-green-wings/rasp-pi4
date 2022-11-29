@@ -5,7 +5,7 @@ capture = cv2.VideoCapture(0)
 fps = capture.get(cv2.CAP_PROP_FPS)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 videoWriter = cv2.VideoWriter('video.avi', fourcc, 1, (int(capture.get(3)),int(capture.get(4))))
- 
+
 frames = 10
 while (frames>0):
  

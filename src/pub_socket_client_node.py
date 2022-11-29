@@ -28,6 +28,7 @@ def global_cb(msg):
 
 
 pub = rospy.Publisher('targeting',GeoPoseStamped,queue_size=1) #for global
+pub = rospy.Publisher('targeting_alt',GeoPoseStamped,queue_size=1) 
 #pub = rospy.Publisher('targeting',PoseStamped,queue_size=10) #for local
 sub = rospy.Subscriber("mavros/global_position/global",NavSatFix,global_cb)
 #sub = rospy.Subscriber("mavros/local_position/pose",NavSatFix,global_cb)
@@ -42,7 +43,7 @@ def connect():
 	#sio.emit("REQ_MESSAGE",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 
 @sio.on('REQ_POS',namespace='/realtime')
-def receive_message(data):
+def request_message(data):
 	rospy.loginfo("Target Received")
 	msg.header.stamp = rospy.Time.now()
 
@@ -52,13 +53,23 @@ def receive_message(data):
 
 	pub.publish(msg)
 
+@sio.on('REQ_ALT',namespace='/realtime')
+def request_ALT_message(data):
+	rospy.loginfo("Target Received")
+	msg.header.stamp = rospy.Time.now()
+
+	msg.pose.position.latitude = global_msg.latitude
+	msg.pose.position.longitude = global_msg.longitude
+	msg.pose.position.altitude= data['alt']
+
+	pub.publish(msg)
+
+
 if __name__ == "__main__" :
 	sio.connect(host,namespaces=['/realtime'],wait_timeout=15)
 
 	while not rospy.is_shutdown():
-		rospy.loginfo("EMIT!")
 		sio.emit("CUR_POS",{"lat":global_msg.latitude, "long":global_msg.longitude, "alt":global_msg.altitude},namespace='/realtime')
 		eventlet.sleep(0)
-		rospy.loginfo("EMIT DONE!")
 		rate.sleep()
-		rospy.loginfo("EMIT FINISHED!")
+
