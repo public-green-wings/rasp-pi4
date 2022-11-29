@@ -28,7 +28,7 @@ def global_cb(msg):
 
 
 pub = rospy.Publisher('targeting',GeoPoseStamped,queue_size=1) #for global
-pub = rospy.Publisher('targeting_alt',GeoPoseStamped,queue_size=1) 
+pub_alt = rospy.Publisher('targeting_alt',GeoPoseStamped,queue_size=1) 
 #pub = rospy.Publisher('targeting',PoseStamped,queue_size=10) #for local
 sub = rospy.Subscriber("mavros/global_position/global",NavSatFix,global_cb)
 #sub = rospy.Subscriber("mavros/local_position/pose",NavSatFix,global_cb)
@@ -62,7 +62,7 @@ def request_ALT_message(data):
 	msg.pose.position.longitude = global_msg.longitude
 	msg.pose.position.altitude= data['alt']
 
-	pub.publish(msg)
+	pub_alt.publish(msg)
 
 
 if __name__ == "__main__" :
